@@ -1,0 +1,53 @@
+<!doctype html>  
+   <html>  
+   <head>  
+      <title>Content Aware</title>  
+      <script src="popup.js"></script>  
+      <script src="init.js"></script>  
+   <style>  
+      #kt_notifier_div{
+         display: none;
+      }
+      body {  
+         min-width: 200px;  
+         text-align: center;  
+         font-family: century Gothic;  
+      } 
+      .button {  
+         background-color: #4CAF50;  
+         border: none;  
+         color: white;  
+         padding: 5px 14px;  
+         text-align: center;  
+         text-decoration: none;  
+         display: inline-block;  
+         font-size: 16px;  
+         margin: 4px 2px;  
+         transition-duration: 0.4s;  
+         cursor: pointer;  
+         }  
+      .button2 {  
+         background-color: white;  
+         color: black;  
+         border: 2px solid #008CBA;  
+         }  
+      .button2:hover {  
+         background-color: #008CBA;  
+         color: white;  
+         }  
+         #kt_SearchQuery {
+            width:100%;
+         }
+         #kt_bigSearchButton {
+            display: block;
+            clear:both;
+         }
+      </style>  
+   </head>  
+   <body>  
+      <h2>Search Text</h2>  
+      <div>Enter as many entries as you would like, seperate all entries with a new line.</div>
+      <textarea id="kt_SearchQuery" placeholder="Enter a search term, seperate multiple terms on new lines."></textarea>
+      <button id="kt_bigSearchButton">Set Search Query</button>
+   </body>  
+</html>  

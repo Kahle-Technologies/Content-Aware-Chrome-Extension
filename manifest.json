@@ -1,6 +1,6 @@
 {
     "name" : "Content Aware",
-    "version": "1.0.4",
+    "version": "1.1.1",
     "manifest_version": 3,
     "description" : "Search site for specified text, and get notified when it is found in the content of a page (displayed on the top of the page)",
     "content_scripts" : [

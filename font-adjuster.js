@@ -11,6 +11,14 @@ window.addEventListener('load', () => {
         chrome.storage.local.set({ "kt_alertSize": element.target.value }, () => { });
     }
 
+    document.getElementById("kt_resetSizeButton").onclick = function () {
+        let defaultSize = 1;
+        document.getElementById("kt_notifier_div").style.fontSize = `${defaultSize}em`;
+        document.querySelector("body").style.marginTop = `${document.getElementById("kt_notifier_div").offsetHeight}px`;
+        document.getElementById("kt_fontSizeChanger").value = defaultSize;
+        chrome.storage.local.set({ "kt_alertSize": defaultSize }, () => { });
+    }
+
     chrome.storage.local.get('kt_alertSize', (kt_alertSize) => {
         let alertSize;
         if (Number(kt_alertSize.kt_alertSize))

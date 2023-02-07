@@ -46,7 +46,9 @@
         }
 
         a,
-        a:visited {
+        a:visited,
+        button {
+            cursor: pointer;
             color: #2a2a2a;
             font-size: 1.5em;
             border-radius: 5px;
@@ -57,10 +59,12 @@
             opacity: .7;
             transition: opacity .33s;
             padding: .25em;
+            margin: 7px;
         }
 
         a:hover,
-        a:visited:hover {
+        a:visited:hover,
+        button:hover {
             opacity: 1;
         }
     </style>
@@ -70,6 +74,7 @@
     <div><label for="kt_fontSizeChanger">Set font size: </label><input class="slider" name="kt_fontSizeChanger"
             id="kt_fontSizeChanger" type="range" min=".5" max="10" step=".05"></div>
     <div id="kt_notifier_div" style="color:#444;background:#1ccc05;">Sample Banner</div>
+    <button id="kt_resetSizeButton">Reset</button>
     <a href="popup.html">back</a>
 </body>
 

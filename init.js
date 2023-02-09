@@ -21,7 +21,7 @@ function addNotifier(searchTerm) {
   })
 }
 function kt_search(searchTerm) {
-  let found = window.find(searchTerm.searchString);
+  let found = (document.querySelector("body").innerText.toLowerCase().indexOf(searchTerm.searchString.toLowerCase()) != -1);
   if (found)
     addNotifier(searchTerm);
   window.getSelection()?.removeAllRanges();

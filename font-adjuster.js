@@ -1,3 +1,7 @@
+/// Author Daniel Kahle
+///Written to be used for both OTES internal useage and Kahle Technologies external usage.
+///OTES:ckeogdplnlkgkmogjnpmocloghjkbggh
+///Kahle Tech: jjgkbaokpbjpmkfflamehnbhfjdfodkj
 window.addEventListener('load', () => {
 
     document.getElementById("kt_fontSizeChanger").oninput = function (element) {

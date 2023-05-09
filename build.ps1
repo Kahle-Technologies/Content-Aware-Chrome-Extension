@@ -13,7 +13,7 @@
 $version[-1]++
 $manifest.version = $version -join "."
 
-ConvertTo-Json $manifest -depth 10 | Out-File $manifestFile -Force
+ConvertTo-Json $manifest -depth 10 | Out-File $manifestFile -Force -Encoding utf8
 
 [string]$buildFolder = "Content-Aware-BuildVersion-$($manifest.version).zip"
 if (Test-Path $buildFolder) { Remove-Item $buildFolder }

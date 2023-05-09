@@ -1,3 +1,7 @@
+/// Author Daniel Kahle
+///Written to be used for both OTES internal useage and Kahle Technologies external usage.
+///OTES:ckeogdplnlkgkmogjnpmocloghjkbggh
+///Kahle Tech: jjgkbaokpbjpmkfflamehnbhfjdfodkj
 window.addEventListener('load', () => {
 
     document.getElementById("kt_addSearchItem").onclick = () => {
@@ -25,7 +29,7 @@ function addQuerySpec() {
     let value = document.getElementById("kt_addSearchItemInput").value;
     if (value === undefined || value == "") return;
     let hex = `#${Math.floor(Math.random() * (255 - 0 + 1) + 0).toString(16)}${Math.floor(Math.random() * (255 - 0 + 1) + 0).toString(16)}${Math.floor(Math.random() * (255 - 0 + 1) + 0).toString(16)}`
-    querySpecs.push({ searchString: value, color: hex });
+    querySpecs.push({ searchString: value, color: hex, highlight: true });
     setQuerySpecs();
     document.querySelector("#kt_searchCriteraItems > tbody").innerHTML = "";
     loadQuerySpecs();
@@ -53,34 +57,70 @@ function updateColor(index, newColor) {
     querySpecs[index].color = newColor;
     setQuerySpecs();
 }
+function updateHighlight(index, highlight){
+    querySpecs[index].highlight = highlight;
+    setQuerySpecs();
+}
 
 function createItem(querySpec, index) {
+
     var table = document.querySelector("#kt_searchCriteraItems > tbody");
+
     var tr = document.createElement("tr");
+
     var td1 = document.createElement("td");
-    td1.className = "td-1";
     var td2 = document.createElement("td");
-    td2.className = "td-2";
-    var label = document.createElement("label");
-    label.innerText = querySpec.searchString;
-    label.htmlFor = `colorInput${index}`;
-    label.style.width = "100%";
-    td1.appendChild(label);
-    setTdColor(td1, querySpec.color);
+    var td3 = document.createElement("td");
+
+    var colorLabel = document.createElement("label");
+    var highlightLabel = document.createElement("label");
+
+    var highlight = document.createElement("input");
     var color = document.createElement("input");
+
+    var button = document.createElement("button");
+
+    td1.className = "td-1";
+    td2.className = "td-2";
+    td3.className = "td-3";
+
+    colorLabel.innerText = querySpec.searchString;
+    colorLabel.htmlFor = `colorInput${index}`;
+    colorLabel.style.width = "100%";
+
+    highlightLabel.innerText = "Highlight";
+    highlightLabel.htmlFor = `highlight${index}`;
+    highlightLabel.style.width = "100%";
+    highlightLabel.onclick = ()=> {highlight.click()};
+    
+    highlight.type = "checkbox";
+    highlight.name = `highlight${index}`
+    highlight.checked = querySpec.highlight?true:false;
+    highlight.onchange = () => {updateHighlight(index, highlight.checked)};
+    
     color.type = "color";
     color.value = querySpec.color;
     color.name = `colorInput${index}`;
     color.oninput = (element) => { setTdColor(td1, element.target.value) };
     color.onchange = () => { updateColor(index, color.value) };
-    td1.appendChild(color);
-    var button = document.createElement("button");
+
     button.innerText = "Remove";
     button.onclick = () => { removeQuerySpec(index) };
-    td2.appendChild(button);
+
     td1.onclick = () => { color.click() };
+
+    setTdColor(td1, querySpec.color);
+
+    td1.appendChild(color);
+    td1.appendChild(colorLabel);
+    td2.appendChild(highlightLabel);
+    td2.appendChild(highlight);
+    td3.appendChild(button);
+
     tr.appendChild(td1);
     tr.appendChild(td2);
+    tr.appendChild(td3);
+
     table.append(tr);
 }
 

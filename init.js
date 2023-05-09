@@ -1,14 +1,26 @@
+/// Author Daniel Kahle
+///Written to be used for both OTES internal useage and Kahle Technologies external usage.
+///OTES:ckeogdplnlkgkmogjnpmocloghjkbggh
+///Kahle Tech: jjgkbaokpbjpmkfflamehnbhfjdfodkj
 const buttonId = "kt_notifier_div";
-function addNotifier(searchTerm) {
+let itemsFound = [];
+let itemsFoundPlain = [];
+function addNotification(searchTerm) {
+    if(itemsFoundPlain.includes(searchTerm.searchString)) return;
+    itemsFound.push(`<span style="background:${searchTerm.color};color:${fontColor(searchTerm.color)}">${searchTerm.searchString}</span>`);
+    itemsFoundPlain.push(searchTerm.searchString)
+}
 
+function displayNotifications() {
   document.querySelector(buttonId)?.remove();
+  var darkMode = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  var background = (darkMode) ? "#444444" : "#eeeeee";
   var div = document.createElement("div");
   div.id = buttonId;
-  div.innerText = `Content Aware Found: "${searchTerm.searchString}"`;
-  div.style.background = searchTerm.color;
-  div.style.color = fontColor(searchTerm.color);
-
-
+  div.innerHTML = `Located: "${itemsFound.join(", ")}"`;
+  div.style.backgroundColor = background;
+  div.style.color = fontColor(background);
+console.log(div);
   chrome.storage.local.get('kt_alertSize', (kt_alertSize) => {
     let alertSize;
     if (Number(kt_alertSize.kt_alertSize))
@@ -16,23 +28,34 @@ function addNotifier(searchTerm) {
     else
       alertSize = 1;
     div.style.fontSize = `${alertSize}em`;
-    document.querySelector("body").appendChild(div);
-    document.querySelector("body").style.marginTop = `${document.getElementById("kt_notifier_div").offsetHeight}px`;
+    let body = document.querySelector("body");
+    body.prepend(div);
+    body.style.marginTop = `${document.getElementById("kt_notifier_div").offsetHeight}px`;
   })
 }
 function kt_search(searchTerm) {
-  let found = (document.querySelector("body").innerText.toLowerCase().indexOf(searchTerm.searchString.toLowerCase()) != -1);
-  if (found)
-    addNotifier(searchTerm);
-  window.getSelection()?.removeAllRanges();
-  return found;
+  let doc = document.querySelector("body").innerHTML;
+  let reg = new RegExp(`(${searchTerm.searchString}(?=(([^<>]*?)\<)(?!\/textarea)))`, "gi");
+  found = reg.test(doc);
+  if (found) {
+    if(searchTerm.highlight === true) {
+      let html = doc.replace(reg, `<span style="background:${searchTerm.color};color:${fontColor(searchTerm.color)};">${searchTerm.searchString}</span>`)
+      document.body.innerHTML = html;
+    }
+
+      addNotification(searchTerm);
+    }
+    return found;
 }
 function kt_start_search() {
   chrome.storage.local.get('kt_searchTerms', (searchQuery) => {
     let kt_SearchQuery = JSON.parse(searchQuery.kt_searchTerms);
+    let foundOnPage = false;
     for (let i = 0; i < kt_SearchQuery.length; i++)
-      if (kt_search(kt_SearchQuery[i]))
-        break;
+        if (kt_search(kt_SearchQuery[i]))
+        foundOnPage = true;
+    if(foundOnPage)
+      displayNotifications();
   });
 }
 

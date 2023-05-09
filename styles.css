@@ -1,9 +1,11 @@
+/*
+/// Author Daniel Kahle
+///Written to be used for both OTES internal useage and Kahle Technologies external usage.
+///OTES:ckeogdplnlkgkmogjnpmocloghjkbggh
+///Kahle Tech: jjgkbaokpbjpmkfflamehnbhfjdfodkj
+*/
 #kt_notifier_div {
     width: 100%;
     text-align: center;
-    position: fixed;
-    top:0;
-    right:0;
     z-index: 999;
-    float:right;
 }

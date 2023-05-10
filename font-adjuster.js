@@ -31,10 +31,14 @@ window.addEventListener('load', () => {
             alertSize = 1;
 
         let hex = `#${Math.floor(Math.random() * (255 - 0 + 1) + 0).toString(16)}${Math.floor(Math.random() * (255 - 0 + 1) + 0).toString(16)}${Math.floor(Math.random() * (255 - 0 + 1) + 0).toString(16)}`
+        var darkMode = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        var background = (darkMode) ? "#444444" : "#eeeeee";
         document.getElementById("kt_fontSizeChanger").value = alertSize;
         document.getElementById("kt_notifier_div").style.fontSize = `${alertSize}em`;
-        document.getElementById("kt_notifier_div").style.background = hex;
-        document.getElementById("kt_notifier_div").style.color = fontColor(hex);
+        document.getElementById("kt_notifier_div").style.background = background;
+        document.getElementById("kt_notifier_div").style.color = fontColor(background);
+        document.querySelector("#kt_notifier_div > span").style.background = hex;
+        document.querySelector("#kt_notifier_div > span").style.color = fontColor(hex);
 
         document.querySelector("body").style.marginTop = `${document.getElementById("kt_notifier_div").offsetHeight}px`;
     })
